@@ -1,5 +1,6 @@
 package med.voll.api.domain.consulta;
 
+
 import med.voll.api.domain.ValidacaoException;
 import med.voll.api.domain.medico.Medico;
 import med.voll.api.domain.medico.MedicoRepository;
@@ -31,7 +32,7 @@ public class AgendaDeConsultas {
 
         var paciente = pacienteRepository.findById ( dados.idPaciente ( ) ).get ( );
         var medico = escolherMedico ( dados );
-        var consulta = new Consulta ( null, medico, paciente, dados.data ( ) );
+        var consulta = new Consulta(null, medico, paciente, dados.data(), null);
         consultaRepository.save ( consulta );
     }
 
@@ -47,7 +48,12 @@ public class AgendaDeConsultas {
     }
 
 
+    public void cancelar(DadosCancelamentoConsulta dados) {
+        if (!consultaRepository.existsById(dados.idConsulta())) {
+            throw new ValidacaoException("Id da consulta informado não existe!");
+        }
 
-
-
+        var consulta = consultaRepository.getReferenceById(dados.idConsulta());
+        consulta.cancelar(dados.motivo());
+    }
 }
