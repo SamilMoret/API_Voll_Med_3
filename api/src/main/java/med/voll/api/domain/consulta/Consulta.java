@@ -2,9 +2,9 @@ package med.voll.api.domain.consulta;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import med.voll.api.domain.medico.Medico;
 import med.voll.api.domain.paciente.Paciente;
 
@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-class Consulta {
+public class Consulta { // Tornar a classe pública
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,5 +38,9 @@ class Consulta {
 
     public void cancelar(MotivoCancelamento motivo) {
         this.motivoCancelamento = motivo;
+    }
+
+    public LocalDateTime getData() {
+        return data;
     }
 }
